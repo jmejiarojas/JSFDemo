@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"    
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+ 
+    <h:head>
+        <title>JSF 2.2 MitoCode Premium</title>
+    </h:head>
+ 
+    <h:body>        
+        <h:form id="frmPrincipal">        
+        	<h:inputText id="txtNombre" value="#{ejemploBean.nombre}" />
+        
+        	<h:commandButton value="Saludar" >
+        		<f:ajax execute="txtNombre" render="txtSaludo"/>
+        	</h:commandButton>
+        	
+        	<h:inputText id="txtSaludo" value="Hola #{ejemploBean.nombre}" />
+        	
+        	<h:selectOneMenu id="cboPaises" value="#{ejemploBean.codigoPais}">
+        		<f:selectItem itemLabel="--Seleccione--" itemValue="#{null}" noSelectionOption="true"/>
+        		<!--  <f:selectItem itemLabel="Peru" itemValue="1" /> -->
+        		<f:selectItems value="#{ejemploBean.lstPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.codigo}"/>
+        		<f:ajax event="change" listener="#{ejemploBean.listarRegiones()}" execute="cboPaises" render="cboRegiones"/>
+        	</h:selectOneMenu>
+        	
+        	<h:selectOneMenu id="cboRegiones" value="#{ejemploBean.codigoRegion}">
+        		<f:selectItem itemLabel="--Seleccione--" itemValue="#{null}" noSelectionOption="true"/>        		
+        		<f:selectItems value="#{ejemploBean.lstRegiones}" var="reg" itemLabel="#{reg.nombre}" itemValue="#{reg.codigo}"/>
+        		<f:ajax event="change" listener="#{ejemploBean.listarProvincias()}" execute="cboRegiones" render="cboProvincias"/>
+        	</h:selectOneMenu>
+        	
+        	<h:selectOneMenu id="cboProvincias" >
+        		<f:selectItem itemLabel="--Seleccione--" itemValue="#{null}" noSelectionOption="true"/>        		
+        		<f:selectItems value="#{ejemploBean.lstProvincias}" var="prov" itemLabel="#{prov.nombre}" itemValue="#{prov.codigo}"/>
+        	</h:selectOneMenu>
+        	
+        	<p:separator />
+        	
+        	<p:selectOneMenu id="cboPaisesPF" value="#{ejemploBean.codigoPais}" filter="true" filterMatchMode="contains">
+        		<f:selectItem itemLabel="--Seleccione--" itemValue="#{null}" noSelectionOption="true"/>
+        		<!--  <f:selectItem itemLabel="Peru" itemValue="1" /> -->
+        		<f:selectItems value="#{ejemploBean.lstPaises}" var="pais" itemLabel="#{pais.nombre}" itemValue="#{pais.codigo}"/>
+        		<p:ajax event="change" listener="#{ejemploBean.listarRegiones()}" update="cboRegionesPF"/>
+        	</p:selectOneMenu>
+        	
+        	<p:selectOneMenu id="cboRegionesPF" value="#{ejemploBean.codigoRegion}">
+        		<f:selectItem itemLabel="--Seleccione--" itemValue="#{null}" noSelectionOption="true"/>        		
+        		<f:selectItems value="#{ejemploBean.lstRegiones}" var="reg" itemLabel="#{reg.nombre}" itemValue="#{reg.codigo}"/>
+        		<f:ajax event="change" listener="#{ejemploBean.listarProvincias()}" execute="cboRegiones" render="cboProvinciasPF"/>
+        	</p:selectOneMenu>
+        	
+        	<p:selectOneMenu id="cboProvinciasPF" >
+        		<f:selectItem itemLabel="--Seleccione--" itemValue="#{null}" noSelectionOption="true"/>        		
+        		<f:selectItems value="#{ejemploBean.lstProvincias}" var="prov" itemLabel="#{prov.nombre}" itemValue="#{prov.codigo}"/>
+        	</p:selectOneMenu>
+        	
+        	<p:separator />        	
+        	
+        	<p:inputText id="txtCaja" value="#{ejemploBean.nombre}">
+        		<p:ajax event="keyup" update="txtSalida1, txtSalida2, txtSalida3, :frm:txtSalida4, :frm:txtSalida5, :frm:txtSalida6"/>
+        	</p:inputText>
+        	
+        	<p:outputLabel id="txtSalida1" value="#{ejemploBean.nombre}"/>
+        	<p:outputLabel id="txtSalida2" value="#{ejemploBean.nombre}"/>
+        	<p:outputLabel id="txtSalida3" value="#{ejemploBean.nombre}"/>
+        </h:form>
+        
+        <h:form id="frm">
+        	<p:outputLabel id="txtSalida4" value="#{ejemploBean.nombre}"/>
+        	<p:outputLabel id="txtSalida5" value="#{ejemploBean.nombre}"/>
+        	<p:outputLabel id="txtSalida6" value="#{ejemploBean.nombre}"/>
+        </h:form>
+    </h:body>
+ 
+</html>

@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head></h:head>
+<body>
+
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:outputText value="Persona" />
+			<p:selectOneMenu value="#{telefonoBean.idPersona}" filter="true" filterMatchMode="contains">
+				<f:selectItem itemLabel="--Seleccione--" itemValue="#{null}"
+					noSelectionOption="true" />
+				<f:selectItems value="#{personaBean.lista}" var="per"
+					itemLabel="#{per.nombres} #{per.apellidos}" itemValue="#{per.id}" />
+			</p:selectOneMenu>
+
+			<h:outputText value="Número" />
+			<p:inputText value="#{telefonoBean.telefono.numero}" maxlength="9" />
+
+			<p:commandButton actionListener="#{telefonoBean.agregar()}"
+				value="Agregar" update="temporal"/>
+			<p:commandButton actionListener="#{telefonoBean.registrar()}"
+			value="Registrar" update="tabla" />
+		</h:panelGrid>
+		
+		<p:dataList id="temporal" value="#{telefonoBean.lstTemporal}" var="temp" emptyMessage="Sin dato disponibles">
+			#{temp.numero}
+		</p:dataList>
+
+		<p:dataTable id="tabla" value="#{telefonoBean.lstTelefono}" var="tel">
+			<p:column headerText="Persona" filterBy="#{tel.persona.nombres} #{tel.persona.apellidos}" filterMatchMode="contains">
+				<p:outputLabel
+					value="#{tel.persona.nombres} #{tel.persona.apellidos}" />
+			</p:column>
+
+			<p:column headerText="Número" filterBy="#{tel.numero}" filterMatchMode="contains">
+				<p:outputLabel value="#{tel.numero}" />
+			</p:column>
+		</p:dataTable>
+		
+		<p:separator />
+		
+		<h3>Exportar</h3>
+		<h:commandLink value="Exportar a Excel">
+			<p:dataExporter type="xls" target="tabla" fileName="tabla"
+				pageOnly="true" />
+		</h:commandLink>
+		
+		<h:commandLink value="Exportar a PDF">
+			<p:dataExporter type="pdf" target="tabla" fileName="tabla"
+				pageOnly="true" />
+		</h:commandLink>
+		
+		
+	</h:form>
+</body>
+
+</html>

@@ -1,0 +1,25 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html">
+
+<h:head></h:head>
+<h:body>
+	<h:form>
+		<h:panelGrid columns="2">
+			<h:outputText value="ID" />
+			<h:inputText value="#{personaBean.persona.id}" />
+
+			<h:outputText value="Nombres" />
+			<h:inputText value="#{personaBean.persona.nombres}" />
+
+			<h:outputText value="Apellidos" />
+			<h:inputText value="#{personaBean.persona.apellidos}" />
+			
+			<h:commandButton action="personas" actionListener="#{personaBean.registrar()}" value="Aceptar" />
+			<h:commandButton action="personas" value="Cancelar" immediate="true"/>
+		</h:panelGrid>
+	</h:form>
+</h:body>
+</html>
